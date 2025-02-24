@@ -4,7 +4,7 @@ import io from "socket.io-client";
 import Editor from "@monaco-editor/react";
 
 
-const socket = io("http://localhost:5000");
+const socket = io("https://realtime-code-editor-1-uxh2.onrender.com");
 
 const languageVersions = {
   javascript: "18.15.0",
