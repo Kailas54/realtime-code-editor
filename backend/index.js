@@ -2,10 +2,28 @@ import express from "express";
 import http from "http";
 import { Server } from "socket.io";
 import path from "path";
+import axios from "axios";
+
 
 const app = express();
 
 const server = http.createServer(app);
+
+const url = "http://localhost:5000";
+const interval = 30000;
+
+function reloadWebsite() {
+  axios
+    .get(url)
+    .then((response) => {
+      console.log("website reloded");
+    })
+    .catch((error) => {
+      console.error(`Error : ${error.message}`);
+    });
+}
+
+setInterval(reloadWebsite, interval);
 
 const io = new Server(server, {
   cors: {
@@ -66,7 +84,24 @@ io.on("connection", (socket) => {
     io.to(roomId).emit("languageUpdate", language);
   });
 
-  socket.on("disconnect", () => {
+  socket.on("compileCode" , async({code, roomId, language, version}) => {
+    if(rooms.has(roomId)){
+      const room = rooms.get(roomId);
+      const response = await axios.post("https://emkc.org/api/v2/piston/execute" ,{
+        language,
+        version,
+        files:[
+          {
+            content: code
+          }
+        ]
+      })
+
+      room.output = response.data.run.output;
+      io.to(roomId).emit("codeResponse", response.data);
+     }
+    });
+   socket.on("disconnect", () => {
     if (currentRoom && currentUser) {
       rooms.get(currentRoom).delete(currentUser);
       io.to(currentRoom).emit("userJoined", Array.from(rooms.get(currentRoom)));
