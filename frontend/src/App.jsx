@@ -155,9 +155,14 @@ const App = () => {
         >
           <option value="javascript">JavaScript</option>
           <option value="python">Python</option>
-          <option value="java">Java</option>
           <option value="c">C</option>
         </select>
+        <button 
+          className="website-button" 
+          onClick={() => window.open("http://localhost:3000/", "_blank")}
+        >
+          Visit Chat
+        </button>
         <button className="leave-button" onClick={leaveRoom}>
           Leave Room
         </button>

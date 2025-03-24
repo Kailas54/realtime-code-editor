@@ -279,3 +279,18 @@ body {
   height: 200px;
 
 }
+
+.website-button {
+  padding: 8px 16px;
+  margin: 10px 0;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.website-button:hover {
+  background-color: #45a049;
+}
