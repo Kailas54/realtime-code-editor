@@ -159,7 +159,7 @@ const App = () => {
         </select>
         <button 
           className="website-button" 
-          onClick={() => window.open("http://localhost:3000/", "_blank")}
+          onClick={() => window.open("http://localhost:4000/", "_blank")}
         >
           Visit Chat
         </button>
